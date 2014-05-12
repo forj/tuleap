@@ -1,0 +1,6 @@
+#cloud-config
+final_message: "maestro cloud-init boot finished, after $UPTIME seconds"
+preserve_hostname: true
+manage_etc_hosts: false
+locale: en_US.UTF-8
+output: {all: '| tee -a /var/log/cloud-init.log'}
