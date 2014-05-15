@@ -65,25 +65,7 @@ cd tuleap-vagrant/
 git submodule init
 git submodule update
 
-chef-solo -j solo/rpm.json -c solo/solo.rb
-
 PUBLIC_IP=$(curl http://169.254.169.254/latest/meta-data/public-ipv4)
+sed -e "s/tuleap.local/$PUBLIC_IP/g" solo/forj.json --in-place
 
-sed -e "s/tuleap.local/$PUBLIC_IP/g" /etc/tuleap/conf/local.inc --in-place
-
-
-#rpm -i http://ftp.nluug.nl/pub/os/Linux/distr/fedora-epel/6/x86_64/epel-release-6-8.noarch.rpm
-#rpm -i http://pkgs.repoforge.org/rpmforge-release/rpmforge-release-0.5.3-1.el6.rf.x86_64.rpm
-#rpm --import http://apt.sw.be/RPM-GPG-KEY.dag.txt
-#yum-config-manager --enable rpmforge
-#yum-config-manager --enable rpmforge-extras
-#sed -e "s|http://mirrorlist.repoforge.org/el6/mirrors-rpmforge-extras|http://mirrorlist.repoforge.org/el6/mirrors-rpmforge-extras\nincludepkgs = git\* perl-Git\*|" /etc/yum.repos.d/rpmforge.repo --in-place
-#
-#
-#yum-config-manager --add-repo=http://ci.tuleap.net/yum/tuleap/rhel/6/dev/x86_64/
-#
-#yum -qy install perl-IO-Compress
-#yum -qy install --enablerepo=rpmforge-extras tuleap-all
-
-
-
+chef-solo -j solo/forj.json -c solo/solo.rb
